@@ -2,19 +2,53 @@ const User = require("../models/User");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { default: mongoose } = require("mongoose");
 
 const jwtSecret = process.env.JWT_SECRET;
 
-// Generate user token
+// Gerar token
 const generateToken = (id) => {
   return jwt.sign({ id }, jwtSecret, {
     expiresIn: "7d",
   });
 };
 
-// Register user and sign in
+// Registrat usuario e logar
 const register = async (req, res) => {
-  res.send("Registro com sucesso!");
+  const { name, email, password } = req.body;
+
+  // Checar se o usuario existe
+  const user = await User.findOne({ email });
+
+  if (user) {
+    res.status(422).json({ errors: ["Por favor, utilize outro e-mail."] });
+    return;
+  }
+
+  //Gerar a senha hash, criptografia da senha
+
+  const salt = await bcrypt.genSalt();
+  const passwordHash = await bcrypt.hash(password, salt);
+
+  //Criar usuario
+
+  const newUser = await User.create({
+    name,
+    email,
+    password: passwordHash,
+  });
+
+  // Checar se o usuario foi criado com sucesso, retornar o token
+
+  if (!newUser) {
+    res.status(422).json({ errors: ["Houve um erro, tente novamente"] });
+    return;
+  }
+
+  res.status(201).json({
+    _id: newUser._id,
+    token: generateToken(newUser._id),
+  });
 };
 
 module.exports = {

@@ -19,10 +19,10 @@ const userCreateValidation = () => {
       .withMessage("A senha precisa ter no mínimo 5 caracteres"),
     body("confirmpassword")
       .isString()
-      .withMessage("A senha é obrigatória")
+      .withMessage("A confirmação de senha é obrigatória")
       .custom((value, { req }) => {
         if (value != req.body.password) {
-          throw new Error("As senham não são iguais");
+          throw new Error("As senham precisam ser iguais!");
         }
         return true;
       }),
