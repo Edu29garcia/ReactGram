@@ -13,19 +13,18 @@ const generateToken = (id) => {
   });
 };
 
-// Registrat usuario e logar
+// Registrar usuario e logar
 const register = async (req, res) => {
   const { name, email, password } = req.body;
 
-  // Checar se o usuario existe
+  // // Checar se o usuario existe
   const user = await User.findOne({ email });
-
   if (user) {
     res.status(422).json({ errors: ["Por favor, utilize outro e-mail."] });
     return;
   }
 
-  //Gerar a senha hash, criptografia da senha
+  //Gerar a criptografia da senha
 
   const salt = await bcrypt.genSalt();
   const passwordHash = await bcrypt.hash(password, salt);
