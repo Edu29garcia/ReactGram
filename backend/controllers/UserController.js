@@ -85,8 +85,65 @@ const getCurrentUser = async (req, res) => {
   res.status(200).json(user);
 };
 
+const update = async (req, res) => {
+  const { name, password, bio } = req.body;
+
+  let profileImage = null;
+
+  if (req.file) {
+    profileImage = req.file.filename;
+  }
+
+  const reqUser = req.user;
+
+  const user = await User.findById(reqUser._id);
+  ("-password");
+
+  if (name) {
+    user.name = name;
+  }
+
+  if (password) {
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
+
+    user.password = passwordHash;
+  }
+
+  if (profileImage) {
+    user.profileImage = profileImage;
+  }
+
+  if (bio) {
+    user.bio = bio;
+  }
+
+  await user.save();
+
+  res.status(200).json(user);
+};
+
+// Pegar usuário pelo ID
+
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(
+      mongoose.Types.ObjectId.createFromHexString(id)
+    ).select("-password");
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ errors: ["Usuário não encontrado2"] });
+    return;
+  }
+};
+
 module.exports = {
   register,
   login,
   getCurrentUser,
+  update,
+  getUserById,
 };
