@@ -135,7 +135,7 @@ const getUserById = async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(404).json({ errors: ["Usuário não encontrado2"] });
+    res.status(404).json({ errors: ["Usuário não encontrado1"] });
     return;
   }
 };
