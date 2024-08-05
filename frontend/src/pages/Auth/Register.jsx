@@ -32,7 +32,7 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Nome"
+          placeholder="OOO CARALHO"
           onChange={(e) => setName(e.target.value)}
           value={name || " "}
         />
