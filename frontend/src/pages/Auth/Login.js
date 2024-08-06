@@ -25,9 +25,7 @@ const Login = () => {
         <input type="submit" value="Entrar" />
       </form>
       <p>
-        Não tem uma conta?
-        <Link to="/register" />
-        Clique aqui
+        Ainda não tem uma conta? <Link to="/register">Clique aqui</Link>
       </p>
     </div>
   );

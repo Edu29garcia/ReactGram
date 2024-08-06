@@ -1,25 +1,19 @@
 import "./App.css";
 
-//Router
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  Router,
-} from "react-router-dom";
+// Hooks
+import { useAuth } from "./Hooks/useAuth";
 
-//Paginas
+// router
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+// components
+import Navbar from "./components/NavBar";
+import Footer from "./components/Footer";
+
+// pages
 import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
-
-//Componentes
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
-
-//Hooks
-import { useAuth } from "./Hooks/useAuth";
 
 function App() {
   const { auth, loading } = useAuth();
@@ -31,19 +25,20 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar />
+        <Navbar />
         <div className="container">
           <Routes>
             <Route
               path="/"
               element={auth ? <Home /> : <Navigate to="/login" />}
             />
+
             <Route
-              path="/login"
-              element={auth ? <Login /> : <Navigate to="/" />}
+              path="login"
+              element={!auth ? <Login /> : <Navigate to="/" />}
             />
             <Route
-              path="/register"
+              path="register"
               element={!auth ? <Register /> : <Navigate to="/" />}
             />
           </Routes>
