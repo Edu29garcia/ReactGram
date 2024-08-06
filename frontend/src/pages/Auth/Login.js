@@ -1,7 +1,36 @@
 import "./Auth.css";
 
+// Componentes
+import { Link } from "react-router-dom";
+import Message from "../../components/Message";
+
+// Hooks
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// Redux
+
 const Login = () => {
-  return <div>Login</div>;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  return (
+    <div id="login">
+      <h2>ReactGram</h2>
+      <p className="subtitle">Faça login para ver o que há de novo</p>
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="E-mail" />
+        <input type="password" placeholder="Senha" />
+        <input type="submit" value="Entrar" />
+      </form>
+      <p>
+        Não tem uma conta?
+        <Link to="/register" />
+        Clique aqui
+      </p>
+    </div>
+  );
 };
 
 export default Login;

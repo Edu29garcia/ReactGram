@@ -7,7 +7,7 @@ const register = async (data) => {
 
   try {
     const res = await fetch(api + "/users/register", config)
-      .then((err) => res.json())
+      .then((res) => res.json())
       .catch((err) => err);
 
     if (res) {
@@ -19,8 +19,15 @@ const register = async (data) => {
   }
 };
 
+// logout do user
+
+const logout = () => {
+  localStorage.removeItem("user");
+};
+
 const authService = {
   register,
+  logout,
 };
 
 export default authService;

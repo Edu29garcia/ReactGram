@@ -1,5 +1,5 @@
 body {
-  font-family: "roboto", sans-serif;
+  font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -19,6 +19,7 @@ a {
 ul {
   list-style: none;
 }
+
 form {
   display: flex;
   flex-direction: column;
@@ -53,7 +54,7 @@ input::placeholder {
 
 .btn,
 button,
-input[type="Submit"] {
+input[type="submit"] {
   background-color: #0094f6;
   color: #fff;
   border: none;
@@ -65,7 +66,7 @@ input[type="Submit"] {
   font-size: 1em;
 }
 
-input[type="Submit"] {
+input[type="submit"] {
   margin-top: 1em;
 }
 
@@ -75,7 +76,7 @@ input:disabled {
 }
 
 button:hover,
-input[type="Submit"]:hover {
+input[type="submit"]:hover {
   opacity: 1;
 }
 
