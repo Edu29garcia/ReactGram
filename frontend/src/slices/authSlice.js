@@ -17,11 +17,11 @@ export const register = createAsyncThunk(
   async (user, thunkAPI) => {
     const data = await authService.register(user);
 
-    // Checar erros
-
-    if (data.erros) {
+    // Check for errors
+    if (data.errors) {
       return thunkAPI.rejectWithValue(data.errors[0]);
     }
+
     return data;
   }
 );
@@ -36,17 +36,16 @@ export const authSlice = createSlice({
       state.success = false;
     },
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.error = null;
         state.loading = false;
         state.success = true;
+        state.error = null;
         state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
