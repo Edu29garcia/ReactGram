@@ -36,7 +36,7 @@ const Register = () => {
     dispatch(register(user));
   };
 
-  // Resetando todos os campos do auth
+  // Limpar os states
   useEffect(() => {
     dispatch(reset());
   }, [dispatch]);
@@ -71,7 +71,7 @@ const Register = () => {
           value={confirmPassword}
         />
         {!loading && <input type="submit" value="Cadastrar" />}
-        {loading && <input type="submit" value="Aguarde..." />}
+        {loading && <input type="submit" disabled value="Aguarde.." />}
         {error && <Message msg={error} type="error" />}
       </form>
       <p>
