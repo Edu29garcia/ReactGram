@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 // Diretorio de upload de imagens
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static("uploads"));
 
 // Conexão do banco de dados
 require("./config/db.js");

@@ -1,7 +1,6 @@
 import { api, requestConfig } from "../Utils/config";
 
-// REQUISIÇÃO DE AUTENTICAÇÃO DO USER
-
+// Register a user
 const register = async (data) => {
   const config = requestConfig("POST", data);
 
@@ -13,20 +12,19 @@ const register = async (data) => {
     if (res) {
       localStorage.setItem("user", JSON.stringify(res));
     }
+
     return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-// Logout do user
-
+// Logout a user
 const logout = () => {
   localStorage.removeItem("user");
 };
 
-// Login do user
-
+// Sign in a user
 const login = async (data) => {
   const config = requestConfig("POST", data);
 
@@ -35,9 +33,10 @@ const login = async (data) => {
       .then((res) => res.json())
       .catch((err) => err);
 
-    if (res._id) {
-      localStorage.getItem("user", JSON.stringify(res));
+    if (res) {
+      localStorage.setItem("user", JSON.stringify(res));
     }
+
     return res;
   } catch (error) {
     console.log(error);
