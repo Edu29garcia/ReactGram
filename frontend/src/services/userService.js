@@ -1,6 +1,6 @@
 import { api, requestConfig } from "../Utils/config";
 
-// Get user details
+// Pegar profile
 const profile = async (data, token) => {
   const config = requestConfig("GET", data, token);
 
@@ -15,7 +15,7 @@ const profile = async (data, token) => {
   }
 };
 
-// Update user details
+// Atualização do user
 const updateProfile = async (data, token) => {
   const config = requestConfig("PUT", data, token, true);
 
@@ -30,7 +30,7 @@ const updateProfile = async (data, token) => {
   }
 };
 
-// Get user details
+// Pegar detalhes do usuario
 const getUserDetails = async (id) => {
   const config = requestConfig("GET");
 

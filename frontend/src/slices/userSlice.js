@@ -9,7 +9,7 @@ const initialState = {
   message: null,
 };
 
-// Get user details, for edit data
+// Pegar perfil
 export const profile = createAsyncThunk(
   "user/profile",
   async (user, thunkAPI) => {
@@ -23,7 +23,7 @@ export const profile = createAsyncThunk(
   }
 );
 
-// Update user details
+// Atualizar dados
 export const updateProfile = createAsyncThunk(
   "user/update",
   async (user, thunkAPI) => {
@@ -31,7 +31,7 @@ export const updateProfile = createAsyncThunk(
 
     const data = await userService.updateProfile(user, token);
 
-    // Check for errors
+    // Verificar erros
     if (data.errors) {
       return thunkAPI.rejectWithValue(data.errors[0]);
     }
@@ -42,15 +42,11 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
-// Get user details
+// Pegar detalhes do usuario
 export const getUserDetails = createAsyncThunk(
-  "user/get",
+  "users/get",
   async (id, thunkAPI) => {
-    const token = thunkAPI.getState().auth.user.token;
-
-    const data = await userService.getUserDetails(id, token);
-
-    console.log(data);
+    const data = await userService.getUserDetails(id);
 
     return data;
   }
