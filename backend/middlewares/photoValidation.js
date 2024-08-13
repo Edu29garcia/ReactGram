@@ -2,7 +2,7 @@ const { body } = require("express-validator");
 
 const photoInsertValidation = () => {
   return [
-    body("tile")
+    body("title")
       .not()
       .equals("undefine")
       .withMessage("O título é obrigatório")
@@ -20,4 +20,24 @@ const photoInsertValidation = () => {
   ];
 };
 
-module.exports = { photoInsertValidation };
+const photoUpdateValidation = () => {
+  return [
+    body("title")
+      .isString()
+      .withMessage("O título é obrigatório")
+      .isLength({ min: 3 })
+      .withMessage("O título deve conter pelo menos 3 caracteres"),
+  ];
+};
+
+const commentValidation = () => {
+  return [
+    body("comment").isString().withMessage("O comentario é obrrigatorio"),
+  ];
+};
+
+module.exports = {
+  photoInsertValidation,
+  photoUpdateValidation,
+  commentValidation,
+};
