@@ -1,6 +1,6 @@
 import "./NavBar.css";
 
-// Componentes
+// Components
 import { NavLink, Link } from "react-router-dom";
 import {
   BsSearch,
@@ -10,19 +10,34 @@ import {
 } from "react-icons/bs";
 
 // Hooks
-import { useAuth } from "../Hooks/useAuth";
 import { useState } from "react";
+import { useAuth } from "../Hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = () => {
-  const auth = useAuth();
-  const user = useSelector((state) => state.auth);
+// Redux
+import { logout, reset } from "../Slices/authSlice";
+
+const Navbar = () => {
+  const { auth } = useAuth();
+  const { user } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+
+    navigate("/login");
+  };
 
   return (
     <nav id="nav">
-      <Link to="/">ReactGram</Link>
-
+      <Link to="/">
+        <h2>ReactGram</h2>
+      </Link>
       <form id="search-form">
         <BsSearch />
         <input type="text" placeholder="Pesquisar" />
@@ -48,11 +63,12 @@ const NavBar = () => {
               </NavLink>
             </li>
             <li>
-              <span>Sair</span>
+              <span onClick={handleLogout}>Sair</span>
             </li>
           </>
         ) : (
           <>
+            {" "}
             <li>
               <NavLink to="/login">Entrar</NavLink>
             </li>
@@ -66,4 +82,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Navbar;

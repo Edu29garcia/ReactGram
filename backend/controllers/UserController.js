@@ -21,7 +21,7 @@ const register = async (req, res) => {
   // Verificar se o user existe
   const user = await User.findOne({ email });
   if (user) {
-    res.status(422).json({ erros: ["Por favor utilize outro email"] });
+    res.status(422).json({ errors: ["Por favor utilize outro email"] });
     return;
   }
 
@@ -38,7 +38,7 @@ const register = async (req, res) => {
 
   // Verificar se o usuário foi criado com sucesso para retornar o token
   if (!newUser) {
-    res.status(422).json({ erros: "Ocorreu um erro, tente novamente" });
+    res.status(422).json({ errors: "Ocorreu um erro, tente novamente" });
     return;
   }
   res.status(201).json({
@@ -53,21 +53,21 @@ const login = async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  // Verificar se o user existe
+  // Verifica se o user existe
   if (!user) {
-    res.status(404).json({ errors: ["Usuário não encontrado"] });
+    res.status(404).json({ errors: ["Usuário não encontrado!"] });
     return;
   }
 
-  // Verificar se a senha está correta
+  // Verificar a senha
   if (!(await bcrypt.compare(password, user.password))) {
-    res.status(422).json({ errors: ["Senha inválida"] });
+    res.status(422).json({ errors: ["Senha inválida!"] });
     return;
   }
 
-  //Retornar o user com o token
-  res.status(201).json({
-    _id: user.id,
+  // Retornar user e token
+  res.status(200).json({
+    _id: user._id,
     profileImage: user.profileImage,
     token: generateToken(user._id),
   });
