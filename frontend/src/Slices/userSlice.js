@@ -41,6 +41,16 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
+// Pegar detalhes do user pelo ID
+export const getUserDetails = createAsyncThunk(
+  "user/get",
+  async (id, thunkAPI) => {
+    const data = await userService.getUserDetails(id);
+
+    return data;
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -53,7 +63,7 @@ export const userSlice = createSlice({
     builder
       .addCase(profile.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.error = false;
       })
       .addCase(profile.fulfilled, (state, action) => {
         state.loading = false;
@@ -63,7 +73,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateProfile.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.error = false;
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.loading = false;
@@ -76,6 +86,16 @@ export const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.user = null;
+      })
+      .addCase(getUserDetails.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(getUserDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
       });
   },
 });
