@@ -9,7 +9,7 @@ const initialState = {
   message: null,
 };
 
-// Pegar detalhes do user
+// Get user details, for edit data
 export const profile = createAsyncThunk(
   "user/profile",
   async (user, thunkAPI) => {
@@ -17,20 +17,21 @@ export const profile = createAsyncThunk(
 
     const data = await userService.profile(user, token);
 
+    console.log(data);
+
     return data;
   }
 );
 
-// Atualizar dados do user
+// Update user details
 export const updateProfile = createAsyncThunk(
-  "users/update",
-
+  "user/update",
   async (user, thunkAPI) => {
     const token = thunkAPI.getState().auth.user.token;
 
     const data = await userService.updateProfile(user, token);
 
-    // Verificar se tem erros
+    // Check for errors
     if (data.errors) {
       return thunkAPI.rejectWithValue(data.errors[0]);
     }
@@ -41,11 +42,15 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
-// Pegar detalhes do user pelo ID
+// Get user details
 export const getUserDetails = createAsyncThunk(
   "user/get",
   async (id, thunkAPI) => {
-    const data = await userService.getUserDetails(id);
+    const token = thunkAPI.getState().auth.user.token;
+
+    const data = await userService.getUserDetails(id, token);
+
+    console.log(data);
 
     return data;
   }
@@ -63,7 +68,7 @@ export const userSlice = createSlice({
     builder
       .addCase(profile.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(profile.fulfilled, (state, action) => {
         state.loading = false;
@@ -73,7 +78,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateProfile.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.loading = false;
@@ -89,7 +94,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUserDetails.pending, (state) => {
         state.loading = true;
-        state.error = false;
+        state.error = null;
       })
       .addCase(getUserDetails.fulfilled, (state, action) => {
         state.loading = false;
